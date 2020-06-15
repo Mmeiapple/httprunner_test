@@ -7,6 +7,8 @@ import random
 
 
 
+
+
 def get_token(appid,secret,url="https://api.weixin.qq.com/"):
     data={'grant_type':'client_credential','appid':appid,'secret':secret}
     response=requests.get(url=url+'cgi-bin/token?',params=data)
