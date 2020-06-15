@@ -1,7 +1,8 @@
 config:
     name: 测试套件
 testcases:
-    - name: 参数化百度搜索
+    - name: 参数化百度搜索_身份证&手机
       testcase: test_case/baidu_search.yml
       parameters:
-        phone: ${creat_phone_move(10)}
+        iD_card: ${creat_id(10)}
+        phone: ${creat_id(10)}

@@ -4,23 +4,40 @@
     output:
       - title
       - phone
+    variables:
+      - headers:
+          Accept: text/javascript, application/javascript, application/ecmascript, application/x-ecmascript, */*; q=0.01
+          Accept-Encoding: gzip, deflate, br
+          Accept-Language: zh-CN,zh;q=0.9,en;q=0.8
+          User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Safari/537.36
+          X-Requested-With: XMLHttpRequest
 
 
 - test:
-    name: get_search_word
+    name: get_search_word_phone
     request:
       url: s?
       method: GET
       params:
         wd: $phone
-      headers:
-        Accept: text/javascript, application/javascript, application/ecmascript, application/x-ecmascript, */*; q=0.01
-        Accept-Encoding: gzip, deflate, br
-        Accept-Language: zh-CN,zh;q=0.9,en;q=0.8
-        User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Safari/537.36
-        X-Requested-With: XMLHttpRequest
+      headers: $headers
     extract:
       - code: "status_code"
       - title: <title>(.+?)</title>
     validate:
-      - eq: [$code,200]
+      - le: [$phone,$title]
+
+
+- test:
+    name: get_search_word_idcard
+    request:
+      url: s?
+      method: GET
+      params:
+        wd: $iD_card
+      headers: $headers
+    extract:
+      - code: "status_code"
+      - title: <title>(.+?)</title>
+    validate:
+      - le: [$iD_card,$title]
