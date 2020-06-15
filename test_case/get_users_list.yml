@@ -1,0 +1,45 @@
+#获取用户列表
+- config:
+    name: "成功获取用户列表"
+    base_url: "https://api.weixin.qq.com/"
+    variables:
+      - appid: "wx60536c088aee3040"
+      - secret: "f214d833f873d8cc1b38255eca0938d9"
+      - oppid: "oVersw4igqN_OWk0b3r6w7-Y8yEU"
+    output:
+      - oppid
+      - count
+
+- test:
+    name: "获取token"
+    request:
+        url: "cgi-bin/token?"
+        method: GET
+        params:
+           grant_type: "client_credential"
+           appid: $appid
+           secret: $secret
+    extract:
+      - code: "status_code"
+      - token: content.access_token
+    validate:
+        - eq: [$code,200]
+        - eq: [content.access_token,$token]
+
+
+- test:
+    name: "获取用户列表"
+    request:
+      url: "cgi-bin/user/get?"
+      method: GET
+      params:
+        access_token: $token
+        next_openid: $oppid
+    extract:
+      - oppid: content.data.openid
+      - count: content.count
+    vaildate:
+      - eq : [$count,2]
+
+
+

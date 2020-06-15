@@ -1,0 +1,7 @@
+config:
+    name: 测试套件
+testcases:
+    - name: 参数化百度搜索
+      testcase: test_case/baidu_search.yml
+      parameters:
+        phone: ${creat_phone_move(10)}

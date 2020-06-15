@@ -1,0 +1,41 @@
+#指定用户设置备注名
+
+- config:
+      name: "为指定用户设置备注名成功"
+      base_url: "https://api.weixin.qq.com/"
+      variables:
+        - openid: "oVersw_xLGX-Q8WB0iOytBCAGIbs"
+        - appid: "wx60536c088aee3040"
+        - secret: "f214d833f873d8cc1b38255eca0938d9"
+
+
+- test:
+    name: "get access_token"
+    request:
+        url: "cgi-bin/token?"
+        method: GET
+        params:
+           grant_type: "client_credential"
+           appid: $appid
+           secret: $secret
+    extract:
+      - code: "status_code"
+      - token: content.access_token
+    validate:
+        - eq: [$code,200]
+        - eq: [content.access_token,$token]
+
+
+- test:
+      name: "设置用户备注名"
+      request:
+        url: "cgi-bin/user/info/updateremark?"
+        method: POST
+        headers:
+          Content-Type: "application/json"
+        params:
+          access_token: $token
+        json: {  "openid": "oVersw_xLGX-Q8WB0iOytBCAGIbs", "remark":"Baby" }
+      validate:
+        - eq: [content.errcode,0]
+        - eq: [content.errmsg,ok]

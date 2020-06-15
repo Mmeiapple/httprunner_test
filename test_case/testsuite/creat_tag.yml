@@ -1,0 +1,7 @@
+config:
+    name: 测试套件
+testcases:
+    - name: 参数化创建用户标签
+      testcase: test_case/creat_tag.yml
+      parameters:
+        search_word: ["松江","浦东","闵行","吉首","张家界","娄底","永州","益阳","湘潭","株洲","衡阳"]

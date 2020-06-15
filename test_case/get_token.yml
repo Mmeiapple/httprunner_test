@@ -1,0 +1,31 @@
+#模拟带参数的GET请求
+
+- config:
+    name: "获取token"
+    base_url: "https://api.weixin.qq.com/"
+    variables:
+      - appid: "wx60536c088aee3040"
+      - secret: "f214d833f873d8cc1b38255eca0938d9"
+    output:
+      - appid
+
+
+- test:
+    name: "get access_token"
+    request:
+        url: "cgi-bin/token?"
+        method: GET
+        params:
+           grant_type: "client_credential"
+           appid: $appid
+           secret: $secret
+    extract:
+      - code: "status_code"
+      - token: content.access_token
+    validate:
+        - eq: [content.access_token,$token]
+        - {"check": reason,"comparator":"eq","expect":"OK"}
+        - {"eq": [$code,200]}
+    output:
+      - token
+

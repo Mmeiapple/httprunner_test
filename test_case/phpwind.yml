@@ -1,0 +1,23 @@
+- config:
+    name: 验证能否打开主页
+    base_url: http://47.107.178.45/phpwind/
+    output:
+      - code
+      - reason
+      - url
+      - cookies
+
+- test:
+     name: open phpwind page
+     request:
+        url: /
+        method: GET
+     extract:
+        - code: status_code
+        - reason: reason
+        - url: url
+        - cookies: cookies
+        - title: <title>(.+?)</title>
+     validate:
+        - eq: [$code,200]
+        - eq: [$title,本站新帖 - phpwind 9.0 - Powered by phpwind]

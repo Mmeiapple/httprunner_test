@@ -1,0 +1,26 @@
+- config:
+    name: "成功用参数创建用户标签"
+    base_url: ${ENV(URL)}
+    variables:
+        - appid: "wx60536c088aee3040"
+        - secret: "f214d833f873d8cc1b38255eca0938d9"
+        - token: ${get_token(appid=$appid,secret=$secret)}
+    output:
+        - tagname
+
+
+- test:
+    name: "创建用户标签"
+    request:
+        headers:
+            Content-Type: "application/json"
+        url: "cgi-bin/tags/create?"
+        method: POST
+        params:
+            access_token: $token
+        json: {   "tag" : {     "name" : $search_word   } }
+    extract:
+        tagname: content.tag.name
+    validate:
+        - eq: [$tagname,$search_word]
+
