@@ -12,6 +12,7 @@
 
 - test:
     name: "get access_token"
+    times: 5
     request:
         url: "cgi-bin/token?"
         method: GET

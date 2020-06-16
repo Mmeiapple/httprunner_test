@@ -1,24 +1,48 @@
 - congig:
     name: 论坛参数化注册用户
-    base_url: "http://47.107.178.45/phpwind/"
+    base_url: http://47.107.178.45/phpwind/
+    output:
+      - title
+
 - test:
-     name: 论坛注册用户
+     name : 打开首页
      request:
-       url: "/index.php"
-       method: POST
-       params:
-          m: "u"
-          c: "register"
-          a: "dorun"
+       url:
+       method: GET
        headers:
-         Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
-          Accept-Encoding: "gzip, deflate"
-          Accept-Language: "zh-CN,zh;q=0.9,en;q=0.8"
-          User-Agent: "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Safari/537.36"
-       data:
-         username: "name1"
-         password: "123456"
-         repassword: "123456"
-         email: "emai"
-         csrf_token: "value"
+         Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+         Accept-Encoding: gzip, deflate
+         Accept-Language: zh-CN,zh;q=0.9,en;q=0.8
+         User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Safari/537.36
+     extract:
+       - title: <title>(.+?)</title>
+     validate:
+       - le: [本站新帖,$title]
+
+
+
+
+
+
+#
+#- test:
+#     name: 论坛注册用户
+#     request:
+#       url: "/index.php"
+#       method: POST
+#       params:
+#          m: "u"
+#          c: "register"
+#          a: "dorun"
+#       headers:
+#         Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+#          Accept-Encoding: "gzip, deflate"
+#          Accept-Language: "zh-CN,zh;q=0.9,en;q=0.8"
+#          User-Agent: "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Safari/537.36"
+#       data:
+#         username: "name1"
+#         password: "123456"
+#         repassword: "123456"
+#         email: "emai"
+#         csrf_token: "value"
 
