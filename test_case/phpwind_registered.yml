@@ -1,0 +1,76 @@
+- config:
+    name: 论坛参数化注册用户
+    base_url: http://47.107.178.45/phpwind/
+    output:
+      - title
+      - csrf_token
+      - loginstatu
+      - reply_content
+    variables:
+      - expecte_title: 本站新帖
+      - headers:
+          Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+          Accept-Encoding: gzip, deflate
+          Accept-Language: zh-CN,zh;q=0.9,en;q=0.8
+          User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Safari/537.36
+      - reply_content: ${random_string()}
+
+- test:
+     name : 打开首页
+     request:
+       url: /
+       method: GET
+       headers:
+         Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+         Accept-Encoding: gzip, deflate
+         Accept-Language: zh-CN,zh;q=0.9,en;q=0.8
+         User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Safari/537.36
+     extract:
+       - title: <title>(.+?)</title>
+       - csrf_token: csrf_token" value="(.+?)"/>
+     validate:
+       - le: [$expecte_title,$title]
+
+
+- test:
+    name: 跳转到论坛页面
+    request:
+      url: index.php?
+      method: GET
+      headers:
+        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+        Accept-Encoding: "gzip, deflate"
+        Accept-Language: "zh-CN,zh;q=0.9,en;q=0.8"
+        User-Agent: "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Safari/537.36"
+      params:
+        m: u
+        c: register
+    validate:
+      - eq: [status_code,200]
+
+
+- test:
+    name: 论坛注册用户
+    request:
+      url: index.php?
+      method: POST
+      headers:
+         Accept: application/json, text/javascript, */*; q=0.01
+         Accept-Encoding: gzip, deflate
+         Accept-Language: zh-CN,zh;q=0.9
+         User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36
+         X-Requested-With: XMLHttpRequest
+      data:
+        username: $username
+        password: $password
+        repassword: $repassword
+        email: $email
+        csrf_token: $csrf_token
+      params:
+           m: u
+           c: register
+           a: dorun
+
+
+
+

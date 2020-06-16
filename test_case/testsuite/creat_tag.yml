@@ -4,4 +4,4 @@ testcases:
     - name: 参数化创建用户标签
       testcase: test_case/creat_tag.yml
       parameters:
-        search_word: ["松江","浦东","闵行","吉首","张家界","娄底","永州","益阳","湘潭","株洲","衡阳"]
+        search_word: ["松江1","浦东1","闵行1","吉1首","张家1界","娄1底","永1州","益1阳","湘潭1","株洲1","衡1阳"]

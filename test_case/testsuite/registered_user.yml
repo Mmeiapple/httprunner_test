@@ -1,0 +1,20 @@
+config:
+    name: 测试套件
+testcases:
+    - name: 参数化论坛注册用户
+      testcase: test_case/phpwind_registered.yml
+      parameters:
+            username-password-repassword-email: ${P(data/registered_data.csv)}
+
+
+
+#
+#
+#config:
+#    name: 测试套件
+#testcases:
+#    - name: 参数化论坛注册用户
+#      testcase: test_case/phpwind_registered.yml
+#      parameters:
+##        username-password-repassword-email: ${P(data/registered_data.csv)}
+#username-password-repassword-email: ${P(data/registered_data.csv)}

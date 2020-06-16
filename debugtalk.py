@@ -7,7 +7,11 @@ import random
 
 
 
+'''
 
+获取token
+
+'''
 
 def get_token(appid,secret,url="https://api.weixin.qq.com/"):
     data={'grant_type':'client_credential','appid':appid,'secret':secret}
@@ -16,6 +20,10 @@ def get_token(appid,secret,url="https://api.weixin.qq.com/"):
     token=re.findall('"access_token":"(.+?)"',text)[0]
     return token
 
+'''
+生成手机号码
+
+'''
 
 def creat_phone_move(count):#生成移动手机号
     phone=[]
@@ -37,6 +45,12 @@ def creat_phone_move(count):#生成移动手机号
 
         phone.append("1{}{}{}".format(second, third, suffix))
     return phone
+
+
+'''
+生成身份证
+
+'''
 
 class GenerateIdCard():
     def __init__(self):
@@ -82,6 +96,11 @@ class GenerateIdCard():
         idCard=str(self.region())+str(self.year())+str(self.month())+str(self.day())+str(self.tail())
         return idCard
 
+'''
+创建身份证ID
+
+'''
+
 def creat_id(count):
     idCard=[]
     for i in range(count):
@@ -90,6 +109,17 @@ def creat_id(count):
     return idCard
 
 
+
+
+'''
+
+生成随机字符串
+
+'''
+def random_string():
+    list=random.sample('sdhjkshfjkaasfafaf',5)
+    string="".join(list)
+    return string
 
 
 def setup_case(casename):
@@ -125,3 +155,7 @@ if __name__=="__main__":
     id=GenerateIdCard().generate_id_card()
     print('身份证为: {}'.format(id))
     print(creat_id(10))
+    print(random_string())
+
+    print(random.choice('abcdefghijklmnopqrstuvwxyz!@#$%^&*()'))
+    print( random.sample('zyxwvutsrqponmlkjihgfedcba', 5))

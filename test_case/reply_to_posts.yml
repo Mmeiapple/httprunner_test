@@ -1,0 +1,110 @@
+- config:
+    name: 论坛参数化注册用户
+    base_url: http://47.107.178.45/phpwind/
+    output:
+      - title
+      - csrf_token
+      - loginstatu
+      - reply_content
+    variables:
+      - expecte_title: 本站新帖
+      - headers:
+          Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+          Accept-Encoding: gzip, deflate
+          Accept-Language: zh-CN,zh;q=0.9,en;q=0.8
+          User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Safari/537.36
+      - reply_content: ${random_string()}
+
+- test:
+     name : 打开首页
+     request:
+       url: /
+       method: GET
+       headers:
+         Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+         Accept-Encoding: gzip, deflate
+         Accept-Language: zh-CN,zh;q=0.9,en;q=0.8
+         User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Safari/537.36
+     extract:
+       - title: <title>(.+?)</title>
+       - csrf_token: csrf_token" value="(.+?)"/>
+     validate:
+       - le: [$expecte_title,$title]
+
+
+- test:
+    name: 登录
+    request:
+      url: index.php?
+      method: POST
+      headers:
+        Accept: application/json, text/javascript, */*; q=0.01
+        Accept-Encoding: gzip, deflate
+        Accept-Language: zh-CN,zh;q=0.9,en;q=0.8
+        User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Safari/537.36
+        X-Requested-With: XMLHttpRequest
+      params:
+        m: u
+        c: login
+        a: dologin
+      data:
+        username: tester01
+        password: 123456
+        csrf_token: $csrf_token
+    extract:
+      - loginstatu: _statu=(.+?)"
+    validate:
+      - eq : [content.state,success]
+
+
+- test:
+    name: 跳转之后的登录
+    request:
+      url: index.php?
+      method: GET
+      headers:
+        $headers
+      params:
+        m: u
+        c: login
+        a: welcome
+        _statu: $loginstatu
+    validate:
+      - eq: [status_code,200]
+
+
+- test:
+    name: 回复发贴
+    request:
+      url: index.php?
+      method: POST
+      headers:
+        Accept: application/json, text/javascript, */*; q=0.01
+        Accept-Encoding: gzip, deflate
+        Accept-Language: zh-CN,zh;q=0.9,en;q=0.8
+        User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Safari/537.36
+        X-Requested-With: XMLHttpRequest
+      params:
+        c: post
+        a: doreply
+        _json: 1
+        fid: 75
+      data:
+        atc_title:
+        atc_content: $reply_content
+        pid:
+        tid: 74633
+        special:
+        reply_notice: 1
+        csrf_token: $csrf_token
+    validate:
+      - eq : [content.state,success]
+
+
+
+
+
+
+#
+
+
