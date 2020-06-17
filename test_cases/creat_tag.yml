@@ -7,19 +7,14 @@
         - token: ${get_token(appid=$appid,secret=$secret)}
     output:
         - tagname
+        - search_word
 
 
 - test:
-    name: "创建用户标签"
-    request:
-        headers:
-            Content-Type: "application/json"
-        url: "cgi-bin/tags/create?"
-        method: POST
-        params:
-            access_token: $token
-        json: {   "tag" : {     "name" : $search_word   } }
+    name: "step01: 执行创建用户标签接口"
+    api: "api/creat_tag.yml"
     extract:
         tagname: content.tag.name
     validate:
         - eq: [$tagname,$search_word]
+

@@ -4,8 +4,7 @@
     output:
       - title
       - csrf_token
-      - loginstatu
-      - reply_content
+      - reg
     variables:
       - expecte_title: 本站新帖
       - headers:
@@ -70,6 +69,12 @@
            m: u
            c: register
            a: dorun
+
+    extract:
+      - reg: <h1>(.+?)</h1
+    validate:
+      - eq : [status_code,200]
+      - ge : [$reg,$username]
 
 
 

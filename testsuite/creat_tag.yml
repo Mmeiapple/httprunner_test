@@ -1,0 +1,14 @@
+config:
+    name: 测试套件
+testcases:
+    - name: 参数化创建用户标签
+      testcase: test_cases/creat_tag.yml
+      parameters:
+        search_word: ${random_string()}
+
+
+
+
+
+
+

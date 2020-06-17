@@ -117,9 +117,11 @@ def creat_id(count):
 
 '''
 def random_string():
+    list1=[]
     list=random.sample('sdhjkshfjkaasfafaf',5)
     string="".join(list)
-    return string
+    list1.append(string)
+    return list1
 
 
 def setup_case(casename):
@@ -150,12 +152,4 @@ def teardown_step(casename):
     print('\n'+"测骤: {} 结束".format(casename)+'\n')
 
 if __name__=="__main__":
-    phone=creat_phone_move(2)
-    print(phone)
-    id=GenerateIdCard().generate_id_card()
-    print('身份证为: {}'.format(id))
-    print(creat_id(10))
     print(random_string())
-
-    print(random.choice('abcdefghijklmnopqrstuvwxyz!@#$%^&*()'))
-    print( random.sample('zyxwvutsrqponmlkjihgfedcba', 5))

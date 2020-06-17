@@ -19,7 +19,7 @@
       url: s?
       method: GET
       params:
-        wd: $phone
+        wd: 1111
       headers: $headers
     extract:
       - code: "status_code"

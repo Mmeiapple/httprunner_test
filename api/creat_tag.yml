@@ -1,0 +1,11 @@
+name: "创建用户标签"
+request:
+    headers:
+        Content-Type: "application/json"
+    url: "cgi-bin/tags/create?"
+    method: POST
+    params:
+       access_token: $token
+    json: {   "tag" : {     "name" : $search_word   } }
+validate:
+     - eq: [status_code,200]
