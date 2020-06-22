@@ -4,8 +4,11 @@ testcases:
     - name: 参数化创建用户标签
       testcase: test_cases/creat_tag.yml
       parameters:
-        search_word: ${random_string()}
+        search_word: [参数一,参数二]
 
+
+
+#        search_word: ${random_string()}
 
 
 

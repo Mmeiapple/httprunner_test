@@ -22,7 +22,6 @@ def get_token(appid,secret,url="https://api.weixin.qq.com/"):
 
 '''
 生成手机号码
-
 '''
 
 def creat_phone_move(count):#生成移动手机号
@@ -151,5 +150,19 @@ def teardown_step(casename):
 
     print('\n'+"测骤: {} 结束".format(casename)+'\n')
 
+
+
+def  TranscodingIso8859_1(string):
+    return string.encode('utf8').decode('iso8859-1')
+
+def TranscodingUtf_8(string):
+    return string.encode('iso8859-1').decode('utf-8')
+
+
+
+
 if __name__=="__main__":
-    print(random_string())
+    # print(get_token('wx60536c088aee3040','f214d833f873d8cc1b38255eca0938d9'))
+    print(TranscodingIso8859_1("是的发是的发送到发送到发送到"))
+    print(TranscodingUtf_8(">ç¾åº¦å®å¨éªè¯"))
+

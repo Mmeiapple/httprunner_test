@@ -7,7 +7,7 @@
       - appid: "wx60536c088aee3040"
       - secret: "f214d833f873d8cc1b38255eca0938d9"
     output:
-      - appid
+      - token
 
 
 - test:
